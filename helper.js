@@ -1,3 +1,8 @@
+const fs = require('fs');
+const process = require('process');
+
+const ROOT_DIR = process.cwd();
+
 /**
  * Get mocked API endpoint content.
  * @param {*} path - 
@@ -45,11 +50,20 @@ function requireUncached(path) {
  * @returns An object
  */
 function getMockConfig() {
-  const mockConfig = requireUncached("./mock.config.js");
+  let filePath = `${ROOT_DIR}/mock.config.js`;
+  try {
+    if (fs.existsSync(filePath)) {
+      // do nothing
+    }
+  } catch(err) {
+    filePath = "./mock.config.js";
+  }
+
+  const mockConfig = requireUncached(filePath);
   Object.keys(mockConfig.api).forEach(key => {
     let controller = mockConfig.api[key];
     if (controller) {
-      mockConfig.api[key] = getApi(`.${key}`, controller);
+      mockConfig.api[key] = getApi(`${ROOT_DIR}${key}`, controller);
     }
   });
   return mockConfig;
