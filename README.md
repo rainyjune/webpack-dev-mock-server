@@ -2,6 +2,10 @@
 
 A simple mock server for webpack dev server.
 
+```
+npm install webpack-dev-mock-server --save-dev
+```
+
 webpack.config.js
 
 ```javascript
