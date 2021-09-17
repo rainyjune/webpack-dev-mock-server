@@ -2,11 +2,13 @@
 
 A simple mock server for webpack dev server.
 
+You need to install this package first.
+
 ```
 npm install webpack-dev-mock-server --save-dev
 ```
 
-webpack.config.js
+Then update your `webpack.config.js`:
 
 ```javascript
 // Require our mock server first
@@ -25,4 +27,27 @@ module.exports = {
     }
   },
 };
+```
+
+Create a file called `mock.config.js` in your project root folder:
+
+```javascript
+module.exports = {
+  enable: true, // Enable the mock feature or not.
+  api: { // Your API endpoints
+    "/api/me": true, // They key specifies the endpoint URL, also denotes your mock file path is `/api/me.js`.
+    "/api/users/list": true, // Set the value to true if you want enable this API.
+  }
+};
+```
+
+For example, your `/api/me.js` should have something like this:
+
+```javascript
+module.exports = function (params) {
+  return {
+    name: 'rainyjune',
+    email: 'rainyjune@live.cn'
+  }
+}
 ```
